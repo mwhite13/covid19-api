@@ -30,7 +30,7 @@ public class Covid19Controller {
 
     @RequestMapping(value = "/addCases", method = RequestMethod.PUT)
     public Covidcase addCases() throws Exception{
-        System.setProperty("webdriver.chrome.driver", "/Users/juanjuarez/Desktop/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--headless");
         chromeOptions.addArguments("--no-sandbox");
