@@ -28,7 +28,7 @@ public class Covid19Controller {
     public static final String COVID_USA_URL ="https://coronavirus.jhu.edu/region/united-states";
     public static final String COVID_GA_URL = "https://coronavirus.jhu.edu/region/us/georgia";
 
-    @RequestMapping(value = "/addCases", method = RequestMethod.PUT)
+    @RequestMapping(value = "/addCases", method = RequestMethod.POST)
     public Covidcase addCases() throws Exception{
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
         ChromeOptions chromeOptions = new ChromeOptions();
@@ -36,7 +36,6 @@ public class Covid19Controller {
         chromeOptions.addArguments("--no-sandbox");
         webDriver = new ChromeDriver(chromeOptions);
         webDriver.get(COVID_USA_URL);
-        // webDriver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
         String usCases = webDriver.findElement(By.xpath("/html/body/div/div/div[2]/div/div[2]/div[1]/div/div/div[2]/div[1]/span")).getText();
         System.out.println("US cases = " + usCases);
         String usDeaths = webDriver.findElement(By.xpath("/html/body/div/div/div[2]/div/div[2]/div[1]/div/div/div[2]/div[2]/span")).getText();
@@ -61,7 +60,8 @@ public class Covid19Controller {
 
     @RequestMapping(value = "/getCases/{id}" , method = RequestMethod.GET)
     public Covidcase getCases(@PathVariable("id")int id){
-        return null;
+        Covidcase c = covid19Dao.getCaseId(id);
+        return c;
     }
 
     @RequestMapping(value = "/deleteCaseData/{id}", method = RequestMethod.DELETE)
