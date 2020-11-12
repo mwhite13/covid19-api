@@ -13,8 +13,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.testng.annotations.BeforeMethod;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
@@ -31,6 +34,8 @@ public class Covid19Controller {
     @RequestMapping(value = "/addCases", method = RequestMethod.POST)
     public Covidcase addCases() throws Exception{
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+//        System.setProperty("webdriver.chrome.driver", "/Users/juanjuarez/Desktop/chromedriver");
+
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--headless");
         chromeOptions.addArguments("--no-sandbox");
@@ -67,5 +72,23 @@ public class Covid19Controller {
     @RequestMapping(value = "/deleteCaseData/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteCaseData(@PathVariable("id")int id){
         return null;
+    }
+
+    @RequestMapping(value = "/getWeekly" , method = RequestMethod.GET)
+    public int getWeeklyReport() throws IOException {
+        List<String> latest = new ArrayList<>();
+        int maxid = covid19Dao.getMaxID();
+        for (int i = maxid; i > 0; i--) {
+            Covidcase temp = covid19Dao.getCaseId(i);
+            if(temp != null) {
+                latest.add(temp.getGa_cases());
+            }
+            if(latest.size() >= 7) {
+                break;
+            }
+        }
+        int newCases = (Integer.parseInt(latest.get(6).replaceAll("[,]",""))) - (Integer.parseInt(latest.get(0).replaceAll("[,]","")));
+        System.out.println(newCases + " new covid cases in Georgia last week");
+        return newCases;
     }
 }

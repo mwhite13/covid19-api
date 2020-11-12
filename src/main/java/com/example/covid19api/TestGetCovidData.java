@@ -18,6 +18,7 @@ public class TestGetCovidData {
     @Test
     public void testGetCovidNumbers() {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver");
+//        System.setProperty("webdriver.chrome.driver", "/Users/juanjuarez/Desktop/chromedriver");
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--headless");
         chromeOptions.addArguments("--no-sandbox");

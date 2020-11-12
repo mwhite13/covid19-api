@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 
 @Repository
@@ -25,5 +26,11 @@ public class Covid19Dao {
         Covidcase covidcase = entityManager.find(Covidcase.class, id);
         entityManager.remove(covidcase);
         return covidcase;
+    }
+
+    public int getMaxID() {
+        Query q = entityManager.createNativeQuery("Select max(id) from covidcases");
+        int maxid = (int) q.getSingleResult();
+        return maxid;
     }
 }
