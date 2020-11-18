@@ -87,7 +87,7 @@ public class Covid19Controller {
                 break;
             }
         }
-        int newCases = (Integer.parseInt(latest.get(6).replaceAll("[,]",""))) - (Integer.parseInt(latest.get(0).replaceAll("[,]","")));
+        int newCases = (Integer.parseInt(latest.get(0).replaceAll("[,]",""))) - (Integer.parseInt(latest.get(6).replaceAll("[,]","")));
         System.out.println(newCases + " new covid cases in Georgia last week");
         return newCases;
     }
