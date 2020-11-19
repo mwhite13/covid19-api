@@ -2,6 +2,7 @@ package com.example.covid19api;
 import oauth.signpost.exception.OAuthCommunicationException;
 import oauth.signpost.exception.OAuthExpectationFailedException;
 import oauth.signpost.exception.OAuthMessageSignerException;
+import org.hibernate.annotations.common.util.impl.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ScheduledTasks {
+public class ScheduleTasks {
 
 
     @Autowired
@@ -42,6 +43,16 @@ public class ScheduledTasks {
         twitter.postTweet("As of: " + covid19Dao.getCaseId(6).getDate() +
                 "/n GA Cases: " + covid19Dao.getCaseId(6).getGa_cases() +
                 "/n GA Deaths: " + covid19Dao.getCaseId(6).getGa_deaths());
+    }
+
+    @Scheduled(fixedRate = 10000)
+    public  void testTweet() throws OAuthExpectationFailedException, OAuthCommunicationException, OAuthMessageSignerException, IOException {
+        twitter.postTweet("As of: " + covid19Dao.getCaseId(6).getDate() +
+                "/n GA Cases: " + covid19Dao.getCaseId(6).getGa_cases() +
+                "/n GA Deaths: " + covid19Dao.getCaseId(6).getGa_deaths());
+        System.out.println("Testing.....");
+
+
     }
 
 }
