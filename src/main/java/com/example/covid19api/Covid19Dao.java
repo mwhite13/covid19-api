@@ -22,6 +22,14 @@ public class Covid19Dao {
         return entityManager.find(Covidcase.class,id);
     }
 
+    public Covidcase update(Covidcase v) {
+        Covidcase found = entityManager.find(Covidcase.class, v.getId());
+        if(found != null) {
+            entityManager.merge(v);
+        }
+        return v;
+    }
+
     public Covidcase deleteCase(int id){
         Covidcase covidcase = entityManager.find(Covidcase.class, id);
         entityManager.remove(covidcase);

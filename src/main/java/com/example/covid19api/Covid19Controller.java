@@ -69,6 +69,12 @@ public class Covid19Controller {
         return c;
     }
 
+    @RequestMapping(value="/updateCase", method = RequestMethod.PUT)
+    public Covidcase updateCase(@RequestBody Covidcase v) {
+        Covidcase temp = covid19Dao.update(v);
+        return temp;
+    }
+
     @RequestMapping(value = "/deleteCaseData/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteCaseData(@PathVariable("id")int id){
         return null;
