@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -77,7 +78,12 @@ public class Covid19Controller {
 
     @RequestMapping(value = "/deleteCaseData/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteCaseData(@PathVariable("id")int id){
-        return null;
+        Covidcase c = covid19Dao.deleteCase(id);
+        if(c != null){
+            return new ResponseEntity<>("found and deleted", HttpStatus.FOUND);
+        } else {
+            return new ResponseEntity<>("not found", HttpStatus.NOT_FOUND);
+        }
     }
 
     @RequestMapping(value = "/getWeekly" , method = RequestMethod.GET)
